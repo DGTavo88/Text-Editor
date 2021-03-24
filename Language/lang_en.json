@@ -1,0 +1,17 @@
+{
+  "window_name": "%s - Text Editor.",
+  "window_name_untitled": "Untitled - Text Editor.",
+  "filemenu_label": "File",
+  "filemenu_newfile": "New File",
+  "filemenu_openfile": "Open File",
+  "filemenu_savefile": "Save File",
+  "filemenu_savefileas": "Save File As...",
+  "filemenu_exiteditor": "Exit Editor",
+  "newfile_saveprompt": "Save file?",
+  "option_yes": "Yes",
+  "option_no": "No",
+  "option_cancel": "Cancel",
+  "savemenu_savetitle": "Select file.",
+  "savemenu_texttype": "Text Files",
+  "savemenu_alltypes": "All Files"
+}
