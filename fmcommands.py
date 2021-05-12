@@ -19,18 +19,18 @@ globals.loadedDirectory = "-1" #Used for storing the directory of the loaded fil
 globals.newFile = False #Flag for new file.
 
 #User decides to save file.
-def EPYes():
+def EndProgramYes():
     SaveFileProcess() #Save file.
     globals.popup.destroy() #Destroy the pop-up.
     sys.exit(0) #End the program.
 
 #User desides to not save file.
-def EPNo():
+def EndProgramNo():
     globals.popup.destroy() #Destroy the pop-up.
     sys.exit(0) #End the program.
 
 #User decides to not end the program.
-def EPCancel():
+def EndProgramCancel():
     globals.popup.destroy() #Destroy the pop-up.
 
 def EndWorldProgram():
@@ -42,9 +42,9 @@ def EndWorldProgram():
         prompt.grid(row = 0, column = 0)    #Display label.
         style = ttk.Style() #Create style.
         style.map("TButton", background = [("pressed", "white"), ("active", "green")])  #Set new style.
-        byes = ttk.Button(globals.popup, text = globals.data["option_yes"], command = EPYes, style = "TButton")  #Create yes button.
-        bno = ttk.Button(globals.popup, text = globals.data["option_no"], command = EPNo) #Create "no" button.
-        bcancel = ttk.Button(globals.popup, text = globals.data["option_cancel"], command = EPCancel) #Create "cancel" button.
+        byes = ttk.Button(globals.popup, text = globals.data["option_yes"], command = EndProgramYes, style = "TButton")  #Create yes button.
+        bno = ttk.Button(globals.popup, text = globals.data["option_no"], command = EndProgramNo) #Create "no" button.
+        bcancel = ttk.Button(globals.popup, text = globals.data["option_cancel"], command = EndProgramCancel) #Create "cancel" button.
         #byes.pack()
         byes.grid(row = 2, column = 0) #Display "yes" button.
         #bno.pack()
@@ -55,14 +55,14 @@ def EndWorldProgram():
         sys.exit(0) #End the program.
 
 #Update window title + some variables once the user has created a new file.
-def NFYUpdate():
+def NewFileYUpdate():
     globals.loadedFile = False
     globals.loadedDirectory = "-1"
     tools.UpdateTitle() #Update title.
     globals.newFile = False
 
 #User decides to create new file.
-def NFYes():
+def NewFileYes():
     globals.newFile = True
     SaveFileProcess() #Save file content.
     globals.popup.destroy() #Destroy pop-up.
@@ -71,13 +71,13 @@ def NFYes():
     globals.loadedDirectory = "-1"
     tools.UpdateTitle()  #Update title.
 
-def NFNo():
+def NewFileNo():
     globals.popup.destroy() #Destroy pop-up-
     globals.tobject.DeleteText() #Delete text from globals.tobject.
     globals.loadedFile = False
     globals.loadedDirectory = "-1"
 
-def NFCancel():
+def NewFileCancel():
     globals.popup.destroy() #Destroy pop-up.
 
 def NewFileProcess():
@@ -89,9 +89,9 @@ def NewFileProcess():
         prompt.grid(row = 0, column = 0) #Display label.
         style = ttk.Style() #Create new style.
         style.map("TButton", background = [("pressed", "white"), ("active", "green")]) #Set new style.
-        byes = ttk.Button(globals.popup, text = globals.data["option_yes"], command = NFYes, style = "TButton") #Create "yes" button.
-        bno = ttk.Button(globals.popup, text = globals.data["option_no"], command = NFNo) #Create "no" button.
-        bcancel = ttk.Button(globals.popup, text = globals.data["option_cancel"], command = NFCancel) #Create "cancel" button.
+        byes = ttk.Button(globals.popup, text = globals.data["option_yes"], command = NewFileYes, style = "TButton") #Create "yes" button.
+        bno = ttk.Button(globals.popup, text = globals.data["option_no"], command = NewFileNo) #Create "no" button.
+        bcancel = ttk.Button(globals.popup, text = globals.data["option_cancel"], command = NewFileCancel) #Create "cancel" button.
         #byes.pack()
         byes.grid(row = 2, column = 0) #Display "yes" button.
         #bno.pack()
@@ -114,7 +114,7 @@ def SaveFileProcess():
         tools.UpdateTitle()  #Update window title.
         print("File saved successfully.")
         if globals.newFile == True:
-            NFYUpdate() #Update window.
+            NewFileYUpdate() #Update window.
     else:
         SaveFileAsProcess() #Go to SaveFileAsProcess.
 
@@ -132,7 +132,7 @@ def SaveFileAsProcess():
             globals.checked_text = False
             tools.UpdateTitle()  #Update window title.
             if globals.newFile == True:
-                NFYUpdate() #Update window title.
+                NewFileYUpdate() #Update window title.
         else:
             globals.loadedFile = False
             globals.loadedDirectory = "-1"
