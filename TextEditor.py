@@ -12,47 +12,53 @@ from textobject import TextObject #Import the TextObject class from textobject.p
 import tools #Import tools from tools.py.
 from fmcommands import * #Import the fmcommands module from fcommands.py.
 import ctypes #Import ctypes to fix text blur.
+import globals #Global Variables to be used all throughout the place.
 
-data = tools.LoadLanguageText() #Load the text from the JSON File.
+globals.Init()
+
+globals.data = tools.LoadLanguageText() #Load the text from the JSON File.
 
 ctypes.windll.shcore.SetProcessDpiAwareness(1) #Fix text blur.
 
 #Create main window.
-mainwindow = Tk()
+globals.mainwindow = Tk()
 
 for f in font.families():
     print(f)
 
 #Create text object.
-tobject = TextObject(mainwindow)
+globals.tobject = TextObject(globals.mainwindow)
 
 #Remove these to disable dark mode.
-tobject.BGColor("#000000")
-tobject.TextColor("#FFFFFF")
-tobject.CursorColor("#FFFFFF")
+globals.tobject.BGColor("#000000")
+globals.tobject.TextColor("#FFFFFF")
+globals.tobject.CursorColor("#FFFFFF")
 
 #Create menu bar.
-menubar = Menu(mainwindow)
+globals.menubar = Menu(globals.mainwindow)
 
 #File Menu.
-filemenu = Menu(menubar, tearoff = False, font = tools.GetFont("menu")) #Create File Menu.
-filemenu.add_command(label = data["filemenu_newfile"], command = lambda: NewFileProcess(mainwindow, tobject)) #Add command "New File".
-filemenu.add_command(label = data["filemenu_openfile"], command = lambda: LoadFileProcess(mainwindow, tobject)) #Add command "Open File".
-filemenu.add_separator() #Add a separator
-filemenu.add_command(label = data["filemenu_savefile"], command = lambda: SaveFileProcess(mainwindow, tobject)) #Add command "Save File".
-filemenu.add_command(label = data["filemenu_savefileas"], command = lambda: SaveFileAsProcess(mainwindow, tobject)) #Add command "Save File As".
-filemenu.add_separator() #Add a separator
-filemenu.add_command(label = data["filemenu_exiteditor"], command = lambda: EndWorldProgram(mainwindow, tobject)) #Add command "Exit Editor".
-menubar.add_cascade(label = data["filemenu_label"], menu = filemenu) #Add the file menu as a cascade menu with the label "File".
+globals.filemenu = Menu(globals.menubar, tearoff = False, font = tools.GetFont("menu")) #Create File Menu.
+globals.filemenu.add_command(label = globals.data["filemenu_newfile"], command = NewFileProcess, accelerator = "Ctrl + N") #Add command "New File".
+globals.filemenu.add_command(label = globals.data["filemenu_openfile"], command = LoadFileProcess, accelerator = "Ctrl + O") #Add command "Open File".
+globals.filemenu.add_separator() #Add a separator
+globals.filemenu.add_command(label = globals.data["filemenu_savefile"], command = SaveFileProcess, accelerator = "Ctrl + S") #Add command "Save File".
+globals.filemenu.add_command(label = globals.data["filemenu_savefileas"], command = SaveFileAsProcess, accelerator = "Ctrl + Shift + S") #Add command "Save File As".
+globals.filemenu.add_separator() #Add a separator
+globals.filemenu.add_command(label = globals.data["filemenu_exiteditor"], command = EndWorldProgram, accelerator = "Ctrl + E") #Add command "Exit Editor".
+globals.menubar.add_cascade(label = globals.data["filemenu_label"], menu = globals.filemenu) #Add the file menu as a cascade menu with the label "File".
+
+globals.mainwindow.bind_all("<Control-s>", lambda x: SaveFileProcess())
+globals.mainwindow.bind_all("<Key>", lambda x: tools.CheckForTextChanges())
 
 #Overwrite Closing Protocol
-mainwindow.protocol("WM_DELETE_WINDOW", lambda: EndWorldProgram(mainwindow, tobject))
+globals.mainwindow.protocol("WM_DELETE_WINDOW", lambda: EndWorldProgram())
 
 #Show menu bar.
-mainwindow.config(menu = menubar)
+globals.mainwindow.config(menu = globals.menubar)
 
 #Set the title of the window.
-mainwindow.title(data["window_name_untitled"])
+globals.mainwindow.title(globals.data["window_name_untitled"])
 
 #Start the window's main loop.
-mainwindow.mainloop()
+globals.mainwindow.mainloop()

@@ -3,13 +3,14 @@
     DGTavo88
 
     Contains several tools (functions) used throughout the program.
-    
+
 """
 from tkinter import font #From the tkinter module import font.
 import os #Import os module.
 import json #Import json module.
 import sys #Import sys module.
 import ntpath #Inport ntpath module.
+import globals #Import Global Variables.
 
 def Error(serror):
     print(serror) #Show error message.
@@ -17,13 +18,11 @@ def Error(serror):
 
 def LoadLanguageText():
     if os.path.exists("Language/lang_en.json"):
-        with open("Language/lang_en.json") as lang_data: #Open the "lang" JSON file as "lang_data".
-            data = json.load(lang_data) #Load the data from the "lang" file and save it as a dictionary.
-            return data #Return dictionary.
+        with open("Language/lang_en.json") as lang_data: #Open the "lang" JSON file as "lang_globals.data".
+            globals.data = json.load(lang_data) #Load the globals.data from the "lang" file and save it as a dictionary.
+            return globals.data #Return dictionary.
     else:
         Error("Error!\nLanguage File doesn't exist.") #Show an error.
-
-data = LoadLanguageText()
 
 def GetFont(sfont = "text"):
     fonts = {
@@ -36,8 +35,8 @@ def GetFont(sfont = "text"):
     else:
         Error("Error!\nDesired font '%s' doesn't exist." %(sfont))
 
-def GetFilename(filepath):
-    tail, head = ntpath.split(filepath) #Split path.
+def GetFilename():
+    tail, head = ntpath.split(globals.loadedDirectory) #Split path.
     print("Tail: " + str(tail))
     print("Head: " + str(head))
     if head != "":
@@ -45,8 +44,16 @@ def GetFilename(filepath):
     else:
         return filepath  #Return directory.
 
-def UpdateTitle(mainwindow, fdir, floaded):
-    if floaded == True:
-        mainwindow.title(data["window_name"] %(GetFilename(fdir))) #Set window name to file name.
-    else:
-        mainwindow.title(data["window_name_untitled"])  #Set window name to default.
+def UpdateTitle():
+    window_text = globals.data["window_name_untitled"]
+    if globals.loadedFile == True:
+        window_text = globals.data["window_name"] %(GetFilename()) #Set window name to file name.
+
+    globals.mainwindow.title(window_text)  #Set window name to default.
+
+def CheckForTextChanges():
+    if globals.tobject.GetText() != globals.tobject.loadedtext:
+        window_title = globals.mainwindow.title()
+        if not globals.checked_text:
+            globals.mainwindow.title("*" + window_title)
+            globals.checked_text = True

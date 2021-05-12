@@ -20,6 +20,7 @@ class TextObject():
         tobject = Text(window, font = tools.GetFont("text")) #Create Text widget.
         tobject.pack(expand=True, fill=BOTH) #Display Text widget.
         self.instance = tobject #Save Text widget reference.
+        self.loadedtext = ""
 
     #Change Background Color.
     def BGColor(self, scolor = "#FFFFFF"):
