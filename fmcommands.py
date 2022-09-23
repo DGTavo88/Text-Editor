@@ -46,11 +46,11 @@ def EndWorldProgram():
         bno = ttk.Button(globals.popup, text = globals.data["option_no"], command = EPNo) #Create "no" button.
         bcancel = ttk.Button(globals.popup, text = globals.data["option_cancel"], command = EPCancel) #Create "cancel" button.
         #byes.pack()
-        byes.grid(row = 2, column = 0) #Display "yes" button.
+        byes.grid(row = 2, column = 0, padx = (4, 32)) #Display "yes" button.
         #bno.pack()
-        bno.grid(row = 2, column = 1) #Display "no" button.
+        bno.grid(row = 2, column = 1, padx=(4, 32)) #Display "no" button.
         #bcancel.pack()
-        bcancel.grid(row = 2, column = 2) #Display "cancel" button.
+        bcancel.grid(row = 2, column = 2, padx=(4, 32)) #Display "cancel" button.
     else:
         sys.exit(0) #End the program.
 
