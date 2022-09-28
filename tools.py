@@ -42,7 +42,7 @@ def GetFilename():
     if head != "":
         return head #Return name.
     else:
-        return filepath  #Return directory.
+        return tail  #Return directory.
 
 def UpdateTitle():
     window_text = globals.data["window_name_untitled"]

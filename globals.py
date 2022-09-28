@@ -1,5 +1,5 @@
 def Init():
-    global data, mainwindow, tobject, menubar, filemenu, popup, checked_text, loadedFile, loadedDirectory, newFile
+    global data, mainwindow, tobject, menubar, filemenu, popup, checked_text, loadedFile, loadedDirectory, newFile, filepath
     data = []
     mainwindow = -1
     tobject = -1
