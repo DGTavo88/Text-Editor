@@ -11,6 +11,7 @@ from tkinter import font
 from textobject import TextObject #Import the TextObject class from textobject.py.
 import tools #Import tools from tools.py.
 from fmcommands import * #Import the fmcommands module from fcommands.py.
+from emcommands import *
 import ctypes #Import ctypes to fix text blur.
 import globals #Global Variables to be used all throughout the place.
 
@@ -46,9 +47,25 @@ globals.filemenu.add_command(label = globals.data["filemenu_savefile"], command 
 globals.filemenu.add_command(label = globals.data["filemenu_savefileas"], command = SaveFileAsProcess, accelerator = "Ctrl + Shift + S") #Add command "Save File As".
 globals.filemenu.add_separator() #Add a separator
 globals.filemenu.add_command(label = globals.data["filemenu_exiteditor"], command = EndWorldProgram, accelerator = "Ctrl + E") #Add command "Exit Editor".
-globals.menubar.add_cascade(label = globals.data["filemenu_label"], menu = globals.filemenu) #Add the file menu as a cascade menu with the label "File".
 
+globals.editmenu = Menu(globals.menubar, tearoff = False, font = tools.GetFont("menu"))
+
+#Edit Menu.
+globals.viewmenu = Menu(globals.menubar, tearoff = False, font = tools.GetFont("menu"))
+globals.viewmenu.add_command(label = globals.data["editmenu_edittext_current"], command = CurrentTextSettings)
+globals.viewmenu.add_separator()
+globals.viewmenu.add_command(label = globals.data["editmenu_edittext_global"])
+globals.viewmenu.add_command(label = globals.data["editmenu_editsettings"])
+
+globals.menubar.add_cascade(label = globals.data["filemenu_label"], menu = globals.filemenu) #Add the file menu as a cascade menu with the label "File".
+globals.menubar.add_cascade(label = globals.data["editmenu_label"], menu = globals.viewmenu)
+globals.menubar.add_cascade(label = "View", menu = globals.viewmenu)
+
+globals.mainwindow.bind_all("<Control-n>", lambda x: NewFileProcess())
+globals.mainwindow.bind_all("<Control-o>", lambda x: LoadFileProcess())
 globals.mainwindow.bind_all("<Control-s>", lambda x: SaveFileProcess())
+globals.mainwindow.bind_all("<Control-Shift-S>", lambda x: SaveFileAsProcess())
+globals.mainwindow.bind_all("<Control-e>", lambda x: EndWorldProgram())
 globals.mainwindow.bind_all("<Key>", lambda x: tools.CheckForTextChanges())
 
 #Overwrite Closing Protocol

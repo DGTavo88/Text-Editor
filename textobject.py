@@ -13,11 +13,13 @@
 
 from tkinter import *
 from tkinter import font
+from tkinter.scrolledtext import *
 import tools
+import globals
 
 class TextObject():
     def __init__(self, window):
-        tobject = Text(window, font = tools.GetFont("text")) #Create Text widget.
+        tobject = ScrolledText(globals.mainwindow, undo = True, font = tools.GetFont("text"))#Text(window, font = tools.GetFont("text")) #Create Text widget.
         tobject.pack(expand=True, fill=BOTH) #Display Text widget.
         self.instance = tobject #Save Text widget reference.
         self.loadedtext = ""

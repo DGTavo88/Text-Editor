@@ -13,11 +13,6 @@ import traceback
 import sys
 import globals
 
-globals.data = tools.LoadLanguageText() #Load strings from file.
-globals.loadedFile = False #Used for checking if a file has been loaded into the text editor.
-globals.loadedDirectory = "-1" #Used for storing the directory of the loaded file.
-globals.newFile = False #Flag for new file.
-
 #User decides to save file.
 def EndProgramYes():
     SaveFileProcess() #Save file.
@@ -124,6 +119,8 @@ def SaveFileAsProcess():
         globals.loadedDirectory = filedialog.asksaveasfilename(initialdir = "%desktop%", title = globals.data["savemenu_savetitle"], filetypes = ((globals.data["savemenu_texttype"], "*.txt"), (globals.data["savemenu_alltypes"], "*.*"))) #Ask user for file path.
         globals.loadedFile = True
         if globals.loadedDirectory != "":   #If we have a path.
+            if not ".txt" in globals.loadedDirectory:
+                globals.loadedDirectory += ".txt"
             with open(globals.loadedDirectory, "w", encoding = "utf-8") as savefile:    #Open file for writing with "utf-8" encoding.
                 print(globals.tobject.GetText())
                 savefile.write(globals.tobject.GetText())    #Write globals.tobject text to the file.
